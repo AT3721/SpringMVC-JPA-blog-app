@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Blog</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px 80px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .btn { padding: 6px 12px; text-decoration: none; border-radius: 4px; color: white; display: inline-block; }
+        .btn-add { background-color: #28a745; }
+        .btn-view { background-color: #17a2b8; }
+        .btn-edit { background-color: #ffc107; color: black; }
+        .btn-delete { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+
+<h2>DANH SÁCH BÀI VIẾT BLOG</h2>
+<a th:href="@{/blogs/create}" class="btn btn-add">+ Viết bài mới</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Tiêu đề</th>
+        <th>Tác giả</th>
+        <th>Tóm tắt</th>
+        <th>Ngày tạo</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b, iter : ${blogs}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${b.title}"></td>
+        <td th:text="${b.author}"></td>
+        <td th:text="${b.summary}"></td>
+        <td th:text="${#temporals.format(b.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+        <td>
+            <a th:href="@{/blogs/{id}(id=${b.id})}" class="btn btn-view">Xem</a>
+            <a th:href="@{/blogs/{id}/edit(id=${b.id})}" class="btn btn-edit">Sửa</a>
+            <a th:href="@{/blogs/{id}/delete(id=${b.id})}"
+               onclick="return confirm('Bạn có chắc muốn xóa bài viết này?')"
+               class="btn btn-delete">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
