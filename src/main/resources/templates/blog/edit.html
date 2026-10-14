@@ -2,43 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Chỉnh Sửa Blog</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 30px 100px; }
-        .form-group { margin-bottom: 15px; }
-        label { font-weight: bold; display: block; margin-bottom: 5px; }
-        input[type="text"], textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { background-color: #ffc107; color: black; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: bold; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa bài viết</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<h2>CẬP NHẬT BÀI BLOG</h2>
+<div class="container" style="max-width: 640px;">
+    <h2 style="margin-bottom: 24px; font-weight: 700;">Chỉnh sửa bài viết</h2>
 
-<form th:action="@{/blogs/update}" th:object="${blog}" method="post">
-    <!-- Bắt buộc có input hidden để giữ ID bài viết khi update -->
-    <input type="hidden" th:field="*{id}" />
-    <input type="hidden" th:field="*{createdAt}" />
+    <form th:action="@{/blogs/update}" th:object="${blog}" method="post" style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Bắt buộc phải có hidden id và createdAt để update đúng bài viết -->
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{createdAt}" />
 
-    <div class="form-group">
-        <label>Tiêu đề:</label>
-        <input type="text" th:field="*{title}" required />
-    </div>
-    <div class="form-group">
-        <label>Tác giả:</label>
-        <input type="text" th:field="*{author}" required />
-    </div>
-    <div class="form-group">
-        <label>Tóm tắt ngắn:</label>
-        <input type="text" th:field="*{summary}" required />
-    </div>
-    <div class="form-group">
-        <label>Nội dung chi tiết:</label>
-        <textarea th:field="*{content}" rows="8" required></textarea>
-    </div>
-    <button type="submit">Cập nhật</button>
-    <a th:href="@{/blogs}">Hủy</a>
-</form>
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Tiêu đề</label>
+            <input type="text" th:field="*{title}" required />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Tác giả</label>
+                <input type="text" th:field="*{author}" required />
+            </div>
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Danh mục</label>
+                <select th:field="*{category}">
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.id}"
+                            th:text="${cat.name}"
+                            th:selected="${blog.category != null and blog.category.id == cat.id}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Tóm tắt ngắn</label>
+            <input type="text" th:field="*{summary}" required />
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Nội dung bài viết</label>
+            <textarea th:field="*{content}" rows="10" required></textarea>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="submit" class="btn btn-primary">Cập nhật bài viết</button>
+            <a th:href="@{/blogs}" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

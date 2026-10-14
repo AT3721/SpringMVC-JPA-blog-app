@@ -2,27 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${blog.title}"></title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px 120px; line-height: 1.6; }
-        .meta { color: #666; font-size: 14px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-        .content { margin-top: 20px; white-space: pre-wrap; }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<h1 th:text="${blog.title}"></h1>
-<div class="meta">
-    Tác giả: <strong th:text="${blog.author}"></strong> |
-    Đăng lúc: <span th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+<div class="container" style="max-width: 680px;">
+    <a th:href="@{/blogs}" class="btn btn-secondary" style="margin-bottom: 30px;">← Tác phẩm khác</a>
+
+    <article>
+        <div class="article-header">
+            <div class="blog-meta" style="margin-bottom: 12px;">
+                <span th:text="${blog.category != null ? blog.category.name : 'Chưa phân loại'}"></span>
+                <span>•</span>
+                <span th:text="${#temporals.format(blog.createdAt, 'dd MMMM, yyyy')}"></span>
+                <span>•</span>
+                <span th:text="'Bởi ' + ${blog.author}"></span>
+            </div>
+            <h1 class="article-title" th:text="${blog.title}"></h1>
+        </div>
+
+        <div class="article-content" th:text="${blog.content}"></div>
+    </article>
 </div>
 
-<p><strong>Tóm tắt:</strong> <em th:text="${blog.summary}"></em></p>
-<hr/>
-
-<div class="content" th:text="${blog.content}"></div>
-
-<br/><br/>
-<a th:href="@{/blogs}">← Quay lại danh sách</a>
 </body>
 </html>

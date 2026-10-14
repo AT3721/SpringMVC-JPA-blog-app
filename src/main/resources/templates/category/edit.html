@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật Danh mục</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container" style="max-width: 520px;">
+    <h2 style="margin-bottom: 24px; font-weight: 700;">Cập nhật Danh mục</h2>
+
+    <form th:action="@{/categories/update}" th:object="${category}" method="post" style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Hidden input giữ lại ID của danh mục -->
+        <input type="hidden" th:field="*{id}" />
+
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Tên danh mục</label>
+            <input type="text" th:field="*{name}" required />
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+            <a th:href="@{/categories}" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

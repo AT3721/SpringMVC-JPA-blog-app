@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Danh mục</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container" style="max-width: 680px;">
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/blogs}" class="nav-brand">
+    <span class="brand-text">Thoughts</span><span class="brand-dot"></span>
+</a>
+            <a th:href="@{/categories/create}" class="btn btn-primary">+ Danh mục mới</a>
+        </div>
+        <div style="margin-top: 10px;">
+            <a th:href="@{/blogs}" class="btn btn-secondary" style="font-size: 0.85rem;">← Quay lại danh sách Blog</a>
+        </div>
+    </header>
+
+    <h2 style="margin-bottom: 20px; font-size: 1.3rem; font-weight: 700;">Danh sách Danh mục</h2>
+
+    <!-- Category List Cards -->
+    <div class="blog-list" style="gap: 12px;">
+        <div class="blog-card" th:each="c : ${categories}" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <span style="font-weight: 600; font-size: 1.05rem;" th:text="${c.name}"></span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem; margin-left: 8px;" th:text="'(#ID: ' + ${c.id} + ')'"></span>
+            </div>
+            <div class="blog-actions">
+                <a th:href="@{/categories/{id}/edit(id=${c.id})}" class="btn btn-secondary" style="padding: 4px 12px; font-size: 0.85rem;">Sửa</a>
+                <a th:href="@{/categories/{id}/delete(id=${c.id})}" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?')" class="btn btn-danger" style="padding: 4px 12px; font-size: 0.85rem;">Xóa</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

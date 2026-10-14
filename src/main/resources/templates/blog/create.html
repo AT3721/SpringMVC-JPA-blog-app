@@ -2,39 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Viết Bài Mới</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 30px 100px; }
-        .form-group { margin-bottom: 15px; }
-        label { font-weight: bold; display: block; margin-bottom: 5px; }
-        input[type="text"], textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { background-color: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài viết mới</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<h2>VIẾT BÀI BLOG MỚI</h2>
+<div class="container" style="max-width: 640px;">
+    <h2 style="margin-bottom: 24px; font-weight: 700;">Viết bài mới</h2>
 
-<form th:action="@{/blogs/create}" th:object="${blog}" method="post">
-    <div class="form-group">
-        <label>Tiêu đề:</label>
-        <input type="text" th:field="*{title}" required />
-    </div>
-    <div class="form-group">
-        <label>Tác giả:</label>
-        <input type="text" th:field="*{author}" required />
-    </div>
-    <div class="form-group">
-        <label>Tóm tắt ngắn:</label>
-        <input type="text" th:field="*{summary}" required />
-    </div>
-    <div class="form-group">
-        <label>Nội dung chi tiết:</label>
-        <textarea th:field="*{content}" rows="8" required></textarea>
-    </div>
-    <button type="submit">Lưu bài viết</button>
-    <a th:href="@{/blogs}">Hủy</a>
-</form>
+    <form th:action="@{/blogs/create}" th:object="${blog}" method="post" style="display: flex; flex-direction: column; gap: 20px;">
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Tiêu đề</label>
+            <input type="text" th:field="*{title}" required />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Tác giả</label>
+                <input type="text" th:field="*{author}" required />
+            </div>
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Danh mục</label>
+                <select th:field="*{category}">
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Tóm tắt ngắn</label>
+            <input type="text" th:field="*{summary}" required />
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Nội dung bài viết</label>
+            <textarea th:field="*{content}" rows="10" required></textarea>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="submit" class="btn btn-primary">Xuất bản bài viết</button>
+            <a th:href="@{/blogs}" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>
